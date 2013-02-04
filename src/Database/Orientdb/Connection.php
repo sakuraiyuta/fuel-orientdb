@@ -67,32 +67,13 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function disconnect()
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
-
-//		try
-//		{
-//			// Database is assumed disconnected
-//			$status = true;
-//
-//			if ($this->_connection instanceof \MySQLi)
-//			{
-//				$status = $this->_connection->close();
-//			}
-//		}
-//		catch (\Exception $e)
-//		{
-//			// Database is probably not disconnected
-//			$status = ! ($this->_connection instanceof \MySQLi);
-//		}
-//
-//		return $status;
+		$result = $this->_connection["binding"]->disconnect();
+		return $result;
 	}
 
 	public function set_charset($charset)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new Exception("this method is not supported.");
 	}
 
 	public function query($type, $sql, $as_object)
@@ -180,25 +161,21 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function in_transaction()
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new Exception("this method is not supported.");
 	}
 
 	public function start_transaction()
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new Exception("this method is not supported.");
 	}
 
 	public function commit_transaction()
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new Exception("this method is not supported.");
 	}
 
 	public function rollback_transaction()
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new Exception("this method is not supported.");
 	}
 }
