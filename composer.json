@@ -1,0 +1,27 @@
+{
+	"name" : "sakuraiyuta/fuel-orientdb",
+	"type" : "library",
+	"description" : "OrientDB connection manager for FuelPHP",
+	"keywords" : ["fuelphp", "orientdb"],
+	"homepage" : "http://github.com/sakuraiyuta/fuel-orientdb",
+	"license" : "MIT",
+	"authors" :
+	[
+		{
+			"name" : "Yuta Sakurai",
+			"email" : "sakurai.yuta@gmail.com",
+			"homepage" : "http://github.com/sakuraiyuta",
+			"role" : "Developer"
+		}
+	],
+	"autoload" : {
+		"psr-0" : {
+			"Database_Orientdb_Connection" : "src/",
+			"OrientDB" : "src/"
+		}
+	},
+	"require" : {
+		"php" : ">=5.3.3",
+		"doctrine/orientdb-odm" : "1.0.0-beta6"
+	}
+}
