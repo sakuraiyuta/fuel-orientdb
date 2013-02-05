@@ -16,7 +16,8 @@
 	],
 	"autoload" : {
 		"psr-0" : {
-			"Fuel" : "src/Fuel/"
+			"Fuel" : "src/Fuel/",
+			"Doctrine" : "tmp/"
 		}
 	},
 	"require" : {
