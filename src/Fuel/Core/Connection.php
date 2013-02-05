@@ -1,5 +1,7 @@
 <?php
 
+namespace Fuel\Core;
+
 use Doctrine\OrientDB\Binding\BindingParameters;
 use Doctrine\OrientDB\Binding\HttpBinding;
 use Doctrine\OrientDB\Query\Query;
@@ -27,7 +29,6 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function connect()
 	{
-		$proxy_dir = APPPATH . "vendor" . DS . "sakuraiyuta" . DS . "fuel-orientdb" . DS . "tmp";
 
 		if ($this->_connection)
 		{
@@ -50,10 +51,18 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 		);
 		$binding = new HttpBinding($parameters);
 		$reader = new Reader(new ArrayCache());
+
+		// regist namespace-path mapping to fuel as PSR-0 so Symfony\Finder can't find entities normally.
+		$proxy_dir = APPPATH . "vendor" . DS . "sakuraiyuta" . DS . "fuel-orientdb" . DS . "tmp" . DS;
+		$entity_dir = APPPATH . "classes" . DS . "Entity" . DS;
+		\Autoloader::add_namespace("Doctrine", $proxy_dir, TRUE);
+		\Autoloader::add_namespace("Entity", $entity_dir, TRUE);
+
 		$mapper = new Mapper($proxy_dir, $reader);
 		$mapper->setDocumentDirectories(
-			array(APPPATH . "classes" . DS . "model")
+			array($entity_dir => "Entity")
 		);
+
 		$manager = new Manager($mapper, $binding);
 
 		// Prevent this information from showing up in traces

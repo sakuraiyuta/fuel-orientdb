@@ -16,8 +16,7 @@
 	],
 	"autoload" : {
 		"psr-0" : {
-			"Database_Orientdb_Connection" : "src/",
-			"OrientDB" : "src/"
+			"Fuel" : "src/Fuel/"
 		}
 	},
 	"require" : {
