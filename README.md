@@ -114,13 +114,13 @@ If you want to use a feature, mapping records to object, write as below:
 // ex: Using raw OrientDB class.
 // The class extends FuelPHP DB class (but many methods are not implemented yet).
 // This returns array contains User object. These objects is mapped to records.
-$result = OrientDB::get_manager
+$result = OrientDB::get_manager()
 	->getRepository("User")
 	->findAll();
 var_dump($result);
 ```
 
-You *need to create User class* for mapping entities. Instruction is below:
+*You need to create User class for mapping entities.* Instruction is below:
 
 * Create directory `Entity` in `"project-dir"/fuel/app/classes/`.
 * Create Entity file in the directory. ex: `User.php`
@@ -191,6 +191,7 @@ See also
 
 * [FuelPHP](http://fuelphp.com) is a simple, flexible, community driven PHP 5.3+ framework.
 * [Composer](http://getcomposer.org) is a tool for dependency management in PHP. Look document and understand auto-loading mechanism in Composer.
+* [OrientDB](http://www.orientdb.org) is an Open Source NoSQL DBMS with both the features of Document and Graph DBMS.
 * [Doctrine Project](http://www.doctrine-project.org/), for learning a concept ORM and ODM.
 * [orientdb-odm](https://github.com/doctrine/orientdb-odm), using in this library.
 * [Starting to play with the Doctrine OrientDB ODM](http://odino.org/starting-to-play-with-the-doctrine-orientdb-odm/), written by Alessandro Nadalin, is a good article for learning to use the library. (Create project using Smarty framework and raw orientdb-odm library is a precondition, but some paragraph is useful even if using FuelPHP)
