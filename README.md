@@ -29,7 +29,7 @@ Installation
 ```
 
 * Execute `composer install`. This command downloads the library and dependencies.
-* Change permissions `"project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp` writable by HTTP Server. ex: `chmod 777 "project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp`
+* Change permissions `"project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp` writable for HTTP Server. ex: `chmod 777 "project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp`
 * Modify your application bootstrap. Target file is `"project-dir"/fuel/app/bootstrap.php`. Add some classes to Autoloader in line `Autoloader::add_classes()`. ex:
 
 ```
@@ -49,7 +49,7 @@ Configuration
 
 You can configure database connection settings using FuelPHP common config file, and also can use `dsn` notation.
 
-Target file is `"project-dir"/fuel/app/{development,test,production}/db.php`. ex:
+Target file is `"project-dir"/fuel/app/config/{development,staging,test,production}/db.php`. ex:
 
 ```
 return array(
