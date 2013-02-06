@@ -29,7 +29,6 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function connect()
 	{
-
 		if ($this->_connection)
 		{
 			return;
@@ -46,18 +45,18 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 			$config[$row_temp[0]] = $row_temp[1];
 		}
 
+		// regist namespace-path mapping to fuel as PSR-0 so Symfony\Finder can't find entities normally.
+		$proxy_dir = APPPATH . "vendor" . DS . "sakuraiyuta" . DS . "fuel-orientdb" . DS . "tmp" . DS;
+		$entity_dir = APPPATH . "classes" . DS . "Entity" . DS;
+		\Autoloader::add_namespace("Doctrine", $proxy_dir . DS . "/Doctrine" . DS, TRUE);
+		\Autoloader::add_namespace("Entity", $entity_dir, TRUE);
+
+		// initialize ODM-Manager
 		$parameters = BindingParameters::create(
 			"http://{$config['username']}:{$config['password']}@{$config['host']}:{$config['port']}/{$config['dbname']}"
 		);
 		$binding = new HttpBinding($parameters);
 		$reader = new Reader(new ArrayCache());
-
-		// regist namespace-path mapping to fuel as PSR-0 so Symfony\Finder can't find entities normally.
-		$proxy_dir = APPPATH . "vendor" . DS . "sakuraiyuta" . DS . "fuel-orientdb" . DS . "tmp" . DS;
-		$entity_dir = APPPATH . "classes" . DS . "Entity" . DS;
-		\Autoloader::add_namespace("Doctrine", $proxy_dir, TRUE);
-		\Autoloader::add_namespace("Entity", $entity_dir, TRUE);
-
 		$mapper = new Mapper($proxy_dir, $reader);
 		$mapper->setDocumentDirectories(
 			array($entity_dir => "Entity")
@@ -72,6 +71,8 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 			"manager" => $manager,
 			"binding" => $binding,
 		);
+
+		return $this->_connection;
 	}
 
 	public function disconnect()
@@ -100,13 +101,13 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 		// Execute the query
 		try {
-			if ( ! $sql instanceof Query )
+			if ( $sql instanceof Query )
 			{
-				$result = $this->_connection["binding"]->query($sql);
+				$result = $this->_connection["manager"]->execute($sql);
 			}
 			else
 			{
-				$result = $this->_connection["manager"]->execute($sql);
+				$result = $this->_connection["binding"]->query($sql);
 			}
 		} catch (Exception $e) {
 			if (isset($benchmark))
@@ -129,8 +130,6 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 		if ($type === \DB::SELECT)
 		{
 			return $result->getResult();
-			// Return an iterator of results
-//			return new \Database_MySQLi_Result($result, $sql, $as_object);
 		}
 		elseif ($type === \DB::INSERT)
 		{
