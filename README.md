@@ -89,10 +89,6 @@ You can use SQL+ query provided by OrientDB, in FuelPHP controllers.
 // This returns array contains stdClass object. These object contains properties.
 $result = DB::query("SELECT * FROM User");
 var_dump($result);
-
-// ex: Using raw OrientDB class.
-// The class extends FuelPHP DB class (but many methods are not implemented yet).
-$result = OrientDB::get_manager
 ```
 
 Use FuelPHP-like query builder
@@ -188,7 +184,7 @@ class User
 }
 ```
 
-Entity directory can't change now. But in the future, implement configuration feature.
+Entity directory can't change now. But in the near future, implement configuration feature.
 
 See also
 ========
