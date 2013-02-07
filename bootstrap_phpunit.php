@@ -1,6 +1,6 @@
 <?php
 
-// Load the PUPUnit Autoloader
+// Load the PHPUnit Autoloader
 include_once('PHPUnit/Autoload.php');
 
 /**
