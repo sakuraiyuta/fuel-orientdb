@@ -70,6 +70,7 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 		$this->_connection = array(
 			"manager" => $manager,
 			"binding" => $binding,
+			"mapper" => $mapper,
 		);
 
 		return $this->_connection;
@@ -77,8 +78,12 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function disconnect()
 	{
-		$result = $this->_connection["binding"]->disconnect();
-		return $result;
+		if ( $this->_connection )
+		{
+			unset($this->_connection);
+		}
+
+		return TRUE;
 	}
 
 	public function set_charset($charset)

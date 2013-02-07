@@ -2,6 +2,7 @@
 
 namespace Fuel\Core;
 
+use \Exception;
 use Fuel\Core\OrientDB\Query as Query;
 use Fuel\Core\OrientDB\NotSupportException as NotSupportException;
 
@@ -10,7 +11,7 @@ class OrientDB extends \Fuel\Core\DB
 	public static function get_manager($db = NULL)
 	{
 		$connection = \Database_Connection::instance($db)->connection();
-		return $connection["manager"];
+		return $connection;
 	}
 
 	public static function query($sql, $type = NULL)
@@ -67,10 +68,35 @@ class OrientDB extends \Fuel\Core\DB
 		return $query;
 	}
 
-	public static function update($table = NULL)
+	public static function update($table = NULL, array $values=NULL)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		if ( ! $table )
+		{
+			throw new NotSupportException("UPDATE query needs table-name in OrientDB.");
+		}
+
+		if ( is_object($table) )
+		{
+			$full_ns_name = get_class($table);
+			$ns_and_name = explode("\\", $full_ns_name);
+			$table = array_pop($ns_and_name);
+		}
+
+		if ( ! is_string($table) )
+		{
+			$type = gettype($table);
+			throw new NotSupportException("Not supported type: {$type}");
+		}
+
+		$query = new Query();
+		$query = $query->update($table);
+
+		if ( $values )
+		{
+			$query = $query->set($values);
+		}
+
+		return $query;
 	}
 
 	public static function delete($table = NULL)

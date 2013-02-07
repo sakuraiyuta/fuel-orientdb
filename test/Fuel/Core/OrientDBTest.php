@@ -5,6 +5,7 @@
 
 use Fuel\Core\OrientDB\Query;
 use Fuel\Core\PhpErrorException;
+use Fuel\Core\OrientDB\NotSupportException;
 
 class OrientDBTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +20,6 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		//		$this->object = new OrientDB;
 	}
 
 	/**
@@ -32,14 +32,14 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::get_manager
-	 * @todo   Implement testGet_manager().
 	 */
 	public function testGet_manager()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$result = OrientDB::get_manager();
+		$this->assertEquals(is_array($result), TRUE);
+		$this->assertEquals(get_class($result["manager"]), "Doctrine\ODM\OrientDB\Manager");
+		$this->assertEquals(get_class($result["binding"]), "Doctrine\OrientDB\Binding\HttpBinding");
+		$this->assertEquals(get_class($result["mapper"]), "Doctrine\ODM\OrientDB\Mapper");
 	}
 
 	/**
@@ -65,7 +65,6 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::select
-	 * @todo   Implement testSelect().
 	 */
 	public function testSelect()
 	{
@@ -88,7 +87,6 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::select_array
-	 * @todo   Implement testSelect_array().
 	 */
 	public function testSelect_array()
 	{
@@ -107,7 +105,6 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::insert
-	 * @todo   Implement testInsert().
 	 */
 	public function testInsert()
 	{
@@ -127,14 +124,30 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::update
-	 * @todo   Implement testUpdate().
 	 */
 	public function testUpdate()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		try {
+			$result = OrientDB::update();
+			$this->assertEquals($result->getTokenValue("Target"), array());
+		} catch (NotSupportException $e) {
+			// It's expected exception. Do nothing.
+		} catch (Exception $e) {
+			$this->fail("Unknown Exception");
+		}
+
+		$result = OrientDB::update("table1");
+		$this->assertEquals(get_class($result), "Doctrine\OrientDB\Query\Command\Update");
+		$this->assertEquals($result->getTokenValue("Class"), array("table1"));
+
+		$result = OrientDB::update(new NotSupportException());
+		$this->assertEquals(get_class($result), "Doctrine\OrientDB\Query\Command\Update");
+		$this->assertEquals($result->getTokenValue("Class"), array("NotSupportException"));
+
+		$result = OrientDB::update("table1", array("column1" => "value1"));
+		$this->assertEquals(get_class($result), "Doctrine\OrientDB\Query\Command\Update");
+		$this->assertEquals($result->getTokenValue("Class"), array("table1"));
+		$this->assertEquals($result->getTokenValue("Updates"), array("column1" => "value1"));
 	}
 
 	/**
