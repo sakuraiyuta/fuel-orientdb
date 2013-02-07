@@ -3,6 +3,7 @@
 namespace Fuel\Core;
 
 use Fuel\Core\OrientDB\Query as Query;
+use Fuel\Core\OrientDB\NotSupportException as NotSupportException;
 
 class OrientDB extends \Fuel\Core\DB
 {
@@ -15,7 +16,7 @@ class OrientDB extends \Fuel\Core\DB
 	public static function query($sql, $type = NULL)
 	{
 		//TODO: implement if possible
-		throw new Exception("this method is not supported.");
+		throw new NotSupportException("this method is not supported.");
 	}
 
 	public static function error_info($db = NULL)
@@ -27,7 +28,14 @@ class OrientDB extends \Fuel\Core\DB
 	public static function select($columns = NULL)
 	{
 		$query = new Query();
-		if ( $columns )
+		if (
+			$columns
+			and is_array($columns)
+		)
+		{
+			return $query->select($columns);
+		}
+		elseif ( $columns )
 		{
 			return $query->select(func_get_args());
 		}
@@ -44,7 +52,7 @@ class OrientDB extends \Fuel\Core\DB
 	public static function insert($table = NULL, array $columns = NULL)
 	{
 		$query = new Query();
-		$query->insert();
+		$query = $query->insert();
 
 		if ( $table )
 		{
