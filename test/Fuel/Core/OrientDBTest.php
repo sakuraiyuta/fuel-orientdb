@@ -129,7 +129,16 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	{
 		try {
 			$result = OrientDB::update();
-			$this->assertEquals($result->getTokenValue("Target"), array());
+			$this->fail("Expected exception has not occured.");
+		} catch (NotSupportException $e) {
+			// It's expected exception. Do nothing.
+		} catch (Exception $e) {
+			$this->fail("Unknown Exception");
+		}
+
+		try {
+			$result = OrientDB::update(123);
+			$this->fail("Expected exception has not occured.");
 		} catch (NotSupportException $e) {
 			// It's expected exception. Do nothing.
 		} catch (Exception $e) {
@@ -296,61 +305,46 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::set_charset
-	 * @todo   Implement testSet_charset().
+	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testSet_charset()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		OrientDB::set_charset("utf8");
 	}
 
 	/**
 	 * @covers Fuel\Core\OrientDB::in_transaction
-	 * @todo   Implement testIn_transaction().
+	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testIn_transaction()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		OrientDB::in_transaction();
 	}
 
 	/**
 	 * @covers Fuel\Core\OrientDB::start_transaction
-	 * @todo   Implement testStart_transaction().
+	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testStart_transaction()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		OrientDB::start_transaction();
 	}
 
 	/**
 	 * @covers Fuel\Core\OrientDB::commit_transaction
-	 * @todo   Implement testCommit_transaction().
+	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testCommit_transaction()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		OrientDB::commit_transaction();
 	}
 
 	/**
 	 * @covers Fuel\Core\OrientDB::rollback_transaction
-	 * @todo   Implement testRollback_transaction().
+	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testRollback_transaction()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		OrientDB::rollback_transaction();
 	}
 }

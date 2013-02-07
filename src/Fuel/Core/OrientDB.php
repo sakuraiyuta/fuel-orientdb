@@ -234,8 +234,7 @@ class OrientDB extends \Fuel\Core\DB
 	 */
 	public static function set_charset($charset, $db = null)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new NotSupportException("this method is not supported.");
 	}
 
 	/**
@@ -248,8 +247,7 @@ class OrientDB extends \Fuel\Core\DB
 	 */
 	public static function in_transaction($db = null)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new NotSupportException("this method is not supported.");
 	}
 
 	/**
@@ -262,8 +260,7 @@ class OrientDB extends \Fuel\Core\DB
 	 */
 	public static function start_transaction($db = null)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new NotSupportException("this method is not supported.");
 	}
 
 	/**
@@ -276,8 +273,7 @@ class OrientDB extends \Fuel\Core\DB
 	 */
 	public static function commit_transaction($db = null)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new NotSupportException("this method is not supported.");
 	}
 
 	/**
@@ -290,8 +286,7 @@ class OrientDB extends \Fuel\Core\DB
 	 */
 	public static function rollback_transaction($db = null)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		throw new NotSupportException("this method is not supported.");
 	}
 }
 
