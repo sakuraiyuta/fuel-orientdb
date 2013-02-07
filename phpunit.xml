@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true" stopOnFailure="false" bootstrap="./bootstrap_phpunit.php">
+	<php>
+		<server name="doc_root" value="../../../.."/>
+		<server name="app_path" value="../../.."/>
+		<server name="core_path" value="../../../../core"/>
+		<server name="package_path" value="../../../../packages"/>
+		<server name="FUEL_ENV" value="test"/>
+	</php>
+</phpunit>
+
