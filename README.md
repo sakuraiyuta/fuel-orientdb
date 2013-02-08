@@ -66,7 +66,7 @@ return array(
 ```
 
 * `$config["default"]["type"]` is regular value `orientdb`. Do not change.
-* `$config["default"]["entity_dir"]` is directory read by Object-Document mapper. Default is `"project-dir"/fuel/app/classes/Entity`. See details: [Object-Document mapping](#object-document-mapping)
+* *Optionally* `$config["default"]["entity_dir"]` is directory read by Object-Document mapper. Default is `"project-dir"/fuel/app/classes/Entity`. See details: [Object-Document mapping](#object-document-mapping)
 * `$config["default"]["connection"]["dsn"]` can splits some sections. Expression is `"dbtype":host="yourdbhostname";dbname="yourdbname";port="yourdbport"`.
 	* `dbtype` is regular value `orientdb`. Do not change.
 	* `host` is your hostname (or IPaddress) working OrientDB.
@@ -88,7 +88,7 @@ You can use SQL+ query provided by OrientDB, in FuelPHP controllers.
 ```
 // ex: Using FuelPHP DB class.
 // In DB class, creates instance Database_Orientdb_Connection and execute query.
-// This returns array contains stdClass object. These object contains properties.
+// This returns array contains stdClass object. These objects contains properties.
 $result = DB::query("SELECT * FROM User");
 var_dump($result);
 ```
@@ -115,7 +115,7 @@ If you want to use a feature, mapping records to object, write as below:
 ```
 // ex: Using raw OrientDB class.
 // The class extends FuelPHP DB class (but many methods are not implemented yet).
-// This returns array contains User object. These objects is mapped to records.
+// This returns array contains User object. These objects are mapped to records.
 $result = OrientDB::get_manager()
 	->getRepository("User")
 	->findAll();
