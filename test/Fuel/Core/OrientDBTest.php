@@ -60,8 +60,8 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testQuery()
 	{
-		$result = OrientDB::query("SELECT * From OGraphVertex");
-		$this->assertEquals(get_class($result), "Fuel\Core\OrientDB\Query");
+		$result = OrientDB::query("SELECT a,b,c From OGraphVertex");
+		$this->assertEquals(is_a($result, "Doctrine\OrientDB\Query\Command"), TRUE);
 	}
 
 	/**

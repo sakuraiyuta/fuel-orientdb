@@ -3,6 +3,7 @@
 namespace Fuel\Core;
 
 use \Exception;
+use \PHPSQLParser;
 use Fuel\Core\OrientDB\Query as Query;
 use Fuel\Core\OrientDB\NotSupportException as NotSupportException;
 
@@ -16,8 +17,37 @@ class OrientDB extends \Fuel\Core\DB
 
 	public static function query($sql, $type = NULL)
 	{
-		//TODO: implement if possible
-		return parent::query($sql, $type);
+		//TODO: unsatisfactory implementation now.
+		$query = new Query();
+		$parser = new PHPSQLParser($sql, TRUE);
+		static::parse_sql_statement($query, "", $parser->parsed);
+
+		return $query;
+	}
+
+	protected static function parse_sql_statement(&$query, $prev_method, $parsed, &$args=array())
+	{
+		foreach ($parsed as $method => $details)
+		{
+			if (
+				is_string($method)
+				or $prev_method == ""
+			)
+			{
+				$method = strtolower($method);
+				$self_args = array();
+				static::parse_sql_statement($query, $method, $details, $self_args);
+				$query = $query->$method($self_args);
+			}
+			elseif ( is_array($details) )
+			{
+				$args[] = $details["base_expr"];
+				if ( $details["sub_tree"] )
+				{
+					return static::parse_sql_statement($query, $prev_method, $details, $args);
+				}
+			}
+		}
 	}
 
 	public static function error_info($db = NULL)
