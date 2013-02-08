@@ -217,7 +217,7 @@ This library uses PHPUnit for testing. If you want to modify, contribute to this
 * Check `phpunit.xml` and modify settings if you want.
 * Execute `phpunit test` in `fuel-orientdb` directory.
 
-You can use [generator](blob/master/bin/generate_test.sh) for generating test-class (Needs phpunit-skelgen. you can install with PEAR.)
+You can use [generator](bin/generate_test.sh) for generating test-class (Needs phpunit-skelgen. you can install with PEAR.)
 
 Directories and files related to testing are below:
 
