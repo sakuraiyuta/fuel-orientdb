@@ -1,7 +1,7 @@
 fuel-orientdb
 =============
 
-fuel-orientdb is a library for using OrientDB in FuelPHP.
+fuel-orientdb is a library for using OrientDB with FuelPHP.
 
 This library is still *experimental*. You should not use for production.
 
@@ -13,6 +13,7 @@ TODO: implement
 Installation
 ============
 
+* 
 * Create [FuelPHP](http://fuelphp.com/) project in new directory. (any installation method you can use. ex:use git-clone, download and extract tarball manually)
 * Install [composer](http://getcomposer.org).
 * In project dir, create `composer.json` file. *Strongly recommended:* set `vendor-dir` value to `fuel/app/vendor`. ex:
@@ -192,6 +193,35 @@ class User
 }
 ```
 
+Testing
+=======
+
+This library uses PHPUnit for testing. If you want to modify, contribute to this, use PHPUnit bootstrap and configuration contains the library. Instruction is below:
+
+* Install this library normally. See details: [Installation](#installation)
+* Configure database settings. Copy `config_phpunit/db.php.sample` to `config_phpunit/db.php` and modify settings. PHPUnit uses the configuration for connecting database.
+* Check `phpunit.xml` and modify settings if you want.
+* Execute `phpunit test` in `fuel-orientdb` directory.
+
+Directories and files related to testing are below:
+
+```
+bootstrap_phpunit.php // bootstrap for PHPUnit. This prepares fixtures PHPUnit allows to call FuelPHP features.
+phpunit.xml // This supplies env-variables that includes directory informations.
+config_phpunit/ // contains database settings for testing CRUD. written in FuelPHP common config scheme.
+├── db.php
+└── db.php.sample
+test
+├── Entity // contains entity-class for testing Object-Document mapping.
+│   └── TestClass.php
+└── Fuel
+    └── Core
+        ├── Database_Orientdb_ConnectionTest.php
+        ├── OrientDB
+        │   └── QueryTest.php
+        └── OrientDBTest.php
+```
+
 See also
 ========
 
@@ -200,4 +230,5 @@ See also
 * [OrientDB](http://www.orientdb.org) is an Open Source NoSQL DBMS with both the features of Document and Graph DBMS.
 * [Doctrine Project](http://www.doctrine-project.org/), for learning a concept ORM and ODM.
 * [orientdb-odm](https://github.com/doctrine/orientdb-odm), using in this library.
+* [CongowOrient](http://congoworient.readthedocs.org/en/latest/index.html) is a set of PHP libraries in order to use OrientDB from PHP. It's not exactly same as this (or orientdb-odm) library, but mostly looks like to use.
 * [Starting to play with the Doctrine OrientDB ODM](http://odino.org/starting-to-play-with-the-doctrine-orientdb-odm/), written by Alessandro Nadalin, is a good article for learning to use the library. (Create project using Smarty framework and raw orientdb-odm library is a precondition, but some paragraph is useful even if using FuelPHP)
