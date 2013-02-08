@@ -43,12 +43,25 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * @covers Fuel\Core\OrientDB::last_query
+	 * @todo   Implement testLast_query().
+	 */
+	public function testLast_query()
+	{
+		
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
 	 * @covers Fuel\Core\OrientDB::query
-	 * @expectedException Fuel\Core\OrientDB\NotSupportException
 	 */
 	public function testQuery()
 	{
-		OrientDB::query(NULL);
+		$result = OrientDB::query("SELECT * From OGraphVertex");
+		$this->assertEquals(get_class($result), "Fuel\Core\OrientDB\Query");
 	}
 
 	/**
@@ -57,10 +70,11 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testError_info()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		
+//		// Remove the following lines when you implement this test.
+//		$this->markTestIncomplete(
+//			'This test has not been implemented yet.'
+//		);
 	}
 
 	/**
@@ -96,11 +110,13 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 		try {
 			$result = OrientDB::select_array();
+			$this->fail("Not occurs PhpErrorException");
 		} catch (PhpErrorException $e) {
-			return;
+			// It's expected exception. Do nothing.
+		} catch (Exception $e) {
+			$name = get_class($e);
+			$this->fail("Unexpected exception {$name}: {$e->getMessage()}");
 		}
-
-		$this->fail("Not occurs PhpErrorException");
 	}
 
 	/**
@@ -133,7 +149,8 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 		} catch (NotSupportException $e) {
 			// It's expected exception. Do nothing.
 		} catch (Exception $e) {
-			$this->fail("Unknown Exception");
+			$name = get_class($e);
+			$this->fail("Unexpected exception {$name}: {$e->getMessage()}");
 		}
 
 		try {
@@ -142,7 +159,8 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 		} catch (NotSupportException $e) {
 			// It's expected exception. Do nothing.
 		} catch (Exception $e) {
-			$this->fail("Unknown Exception");
+			$name = get_class($e);
+			$this->fail("Unexpected exception {$name}: {$e->getMessage()}");
 		}
 
 		$result = OrientDB::update("table1");
@@ -161,14 +179,36 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB::delete
-	 * @todo   Implement testDelete().
 	 */
 	public function testDelete()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		try {
+			$result = OrientDB::delete();
+			$this->fail("Expected exception has not occured.");
+		} catch (NotSupportException $e) {
+			// It's expected exception. Do nothing.
+		} catch (Exception $e) {
+			$name = get_class($e);
+			$this->fail("Unexpected exception {$name}: {$e->getMessage()}");
+		}
+
+		try {
+			$result = OrientDB::delete(123);
+			$this->fail("Expected exception has not occured.");
+		} catch (NotSupportException $e) {
+			// It's expected exception. Do nothing.
+		} catch (Exception $e) {
+			$name = get_class($e);
+			$this->fail("Unexpected exception {$name}: {$e->getMessage()}");
+		}
+
+		$result = OrientDB::delete("table1");
+		$this->assertEquals(get_class($result), "Doctrine\OrientDB\Query\Command\Delete");
+		$this->assertEquals($result->getTokenValue("Class"), array("table1"));
+
+		$result = OrientDB::delete(new NotSupportException());
+		$this->assertEquals(get_class($result), "Doctrine\OrientDB\Query\Command\Delete");
+		$this->assertEquals($result->getTokenValue("Class"), array("NotSupportException"));
 	}
 
 	/**

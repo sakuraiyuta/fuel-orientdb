@@ -17,7 +17,7 @@ class OrientDB extends \Fuel\Core\DB
 	public static function query($sql, $type = NULL)
 	{
 		//TODO: implement if possible
-		throw new NotSupportException("this method is not supported.");
+		return parent::query($sql, $type);
 	}
 
 	public static function error_info($db = NULL)
@@ -70,23 +70,7 @@ class OrientDB extends \Fuel\Core\DB
 
 	public static function update($table = NULL, array $values=NULL)
 	{
-		if ( ! $table )
-		{
-			throw new NotSupportException("UPDATE query needs table-name in OrientDB.");
-		}
-
-		if ( is_object($table) )
-		{
-			$full_ns_name = get_class($table);
-			$ns_and_name = explode("\\", $full_ns_name);
-			$table = array_pop($ns_and_name);
-		}
-
-		if ( ! is_string($table) )
-		{
-			$type = gettype($table);
-			throw new NotSupportException("Not supported type: {$type}");
-		}
+		$table = static::check_table_name("UPDATE", $table);
 
 		$query = new Query();
 		$query = $query->update($table);
@@ -101,8 +85,10 @@ class OrientDB extends \Fuel\Core\DB
 
 	public static function delete($table = NULL)
 	{
-		//TODO: implement
-		throw new Exception("not implemented yet.");
+		$table = static::check_table_name("DELETE", $table);
+
+		$query = new Query();
+		return $query->delete($table);
 	}
 
 	public static function expr($string)
@@ -287,6 +273,29 @@ class OrientDB extends \Fuel\Core\DB
 	public static function rollback_transaction($db = null)
 	{
 		throw new NotSupportException("this method is not supported.");
+	}
+
+	protected static function check_table_name($method, $table)
+	{
+		if ( ! $table )
+		{
+			throw new NotSupportException("{$method} query needs table-name in OrientDB.");
+		}
+
+		if ( is_object($table) )
+		{
+			$full_ns_name = get_class($table);
+			$ns_and_name = explode("\\", $full_ns_name);
+			$table = array_pop($ns_and_name);
+		}
+
+		if ( ! is_string($table) )
+		{
+			$type = gettype($table);
+			throw new NotSupportException("Not supported type: {$type}");
+		}
+
+		return $table;
 	}
 }
 
