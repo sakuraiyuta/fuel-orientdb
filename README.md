@@ -5,6 +5,20 @@ fuel-orientdb is a library for using OrientDB with FuelPHP.
 
 This library is still *experimental*. You should not use for production.
 
+Table of Contents
+=================
+
+* [Features](#features)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [How to use](#how-to-use)
+	* [Use raw SQL+ query](#use-raw-sql-query)
+	* [Use FuelPHP-like query builder](#use-fuelphp-like-query-builder)
+	* [Use raw orientdb-odm Manager](#use-raw-orientdb-odm-manager)
+	* [Object-Document mapping](#object-document-mapping)
+* [Testing](#testing)
+* [See also](#see-also)
+
 Features
 ========
 
@@ -13,7 +27,7 @@ TODO: implement
 Installation
 ============
 
-* 
+* Install and execute [OrientDB](http://www.orientdb.org).
 * Create [FuelPHP](http://fuelphp.com/) project in new directory. (any installation method you can use. ex:use git-clone, download and extract tarball manually)
 * Install [composer](http://getcomposer.org).
 * In project dir, create `composer.json` file. *Strongly recommended:* set `vendor-dir` value to `fuel/app/vendor`. ex:
@@ -203,23 +217,21 @@ This library uses PHPUnit for testing. If you want to modify, contribute to this
 * Check `phpunit.xml` and modify settings if you want.
 * Execute `phpunit test` in `fuel-orientdb` directory.
 
+You can use [generator](blob/master/bin/generate_test.sh) for generating test-class (Needs phpunit-skelgen. you can install with PEAR.)
+
 Directories and files related to testing are below:
 
 ```
 bootstrap_phpunit.php // bootstrap for PHPUnit. This prepares fixtures PHPUnit allows to call FuelPHP features.
 phpunit.xml // This supplies env-variables that includes directory informations.
+
 config_phpunit/ // contains database settings for testing CRUD. written in FuelPHP common config scheme.
 ├── db.php
 └── db.php.sample
 test
 ├── Entity // contains entity-class for testing Object-Document mapping.
 │   └── TestClass.php
-└── Fuel
-    └── Core
-        ├── Database_Orientdb_ConnectionTest.php
-        ├── OrientDB
-        │   └── QueryTest.php
-        └── OrientDBTest.php
+└── ... // test codes under the directory.
 ```
 
 See also
