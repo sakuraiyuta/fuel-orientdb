@@ -60,8 +60,12 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testQuery()
 	{
-		$result = OrientDB::query("SELECT a,b,c From OGraphVertex");
-		$this->assertEquals(is_a($result, "Doctrine\OrientDB\Query\Command"), TRUE);
+		$result = OrientDB::query("SELECT a,b,c FROM OGraphVertex WHERE a=1 AND b='x' AND c='y'");
+//		var_dump(get_class($result));
+//		$this->assertEquals(is_a($result, "Doctrine\OrientDB\Query\Command"), TRUE);
+//		$this->assertEquals($result->getTokenValue("Projections"), array('a', 'b', 'c'));
+//		var_dump($result);
+		$this->assertEquals(is_a($result, "Fuel\\Core\\Database_Query"), TRUE);
 	}
 
 	/**
@@ -72,9 +76,9 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	{
 		
 //		// Remove the following lines when you implement this test.
-//		$this->markTestIncomplete(
-//			'This test has not been implemented yet.'
-//		);
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
 	}
 
 	/**

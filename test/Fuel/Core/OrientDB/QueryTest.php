@@ -6,49 +6,61 @@ use Fuel\Core\OrientDB\Query;
 
 class QueryTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Query
-     */
-    protected $object;
+	/**
+	 * @var Query
+	 */
+	protected $object;
 
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new Query;
-    }
+	/**
+	 * Sets up the fixture, for example, opens a network connection.
+	 * This method is called before a test is executed.
+	 */
+	protected function setUp()
+	{
+		$this->object = new Query;
+	}
 
-    /**
-     * Tears down the fixture, for example, closes a network connection.
-     * This method is called after a test is executed.
-     */
-    protected function tearDown()
-    {
-    }
+	/**
+	 * Tears down the fixture, for example, closes a network connection.
+	 * This method is called after a test is executed.
+	 */
+	protected function tearDown()
+	{
+	}
 
-    /**
-     * @covers Fuel\Core\OrientDB\Query::execute
-     * @todo   Implement testExecute().
-     */
-    public function testExecute()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
+	/**
+	 * @covers Fuel\Core\OrientDB\Query::execute
+	 * @todo   Implement testExecute().
+	 */
+	public function testExecute()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
 
-    /**
-     * @covers Fuel\Core\OrientDB\Query::set
-     * @todo   Implement testSet().
-     */
-    public function testSet()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
-    }
+	/**
+	 * @covers Fuel\Core\OrientDB\Query::set
+	 * @todo   Implement testSet().
+	 */
+	public function testSet()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
+	 * @covers Fuel\Core\OrientDB\Query::parse_sql
+	 * @todo   Implement testParse_sql().
+	 */
+	public function testParse_sql()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
 }
