@@ -55,6 +55,7 @@ Target file is `"project-dir"/fuel/app/config/{development,staging,test,producti
 return array(
 	'default' => array(
 		'type'       => 'orientdb',
+		'entity_dir' => __DIR__ . '/../test/Entity/',
 		'connection'  => array(
 			'dsn'        => 'orientdb:host=localhost;dbname=school-manager;port=2480',
 			'username'   => 'admin',
@@ -65,6 +66,7 @@ return array(
 ```
 
 * `$config["default"]["type"]` is regular value `orientdb`. Do not change.
+* `$config["default"]["entity_dir"]` is directory read by Object-Document mapper. Default is `"project-dir"/fuel/app/classes/Entity`. See details: [Object-Document mapping](#object-document-mapping)
 * `$config["default"]["connection"]["dsn"]` can splits some sections. Expression is `"dbtype":host="yourdbhostname";dbname="yourdbname";port="yourdbport"`.
 	* `dbtype` is regular value `orientdb`. Do not change.
 	* `host` is your hostname (or IPaddress) working OrientDB.
@@ -120,9 +122,15 @@ $result = OrientDB::get_manager()
 var_dump($result);
 ```
 
-*You need to create User class for mapping entities.* Instruction is below:
+Object-Document mapping
+-----------------------
+
+*You need to create User class for mapping entities.*
+
+Instruction is below:
 
 * Create directory `Entity` in `"project-dir"/fuel/app/classes/`.
+	* *Optionally* you can change Entity dir in configuration. See also:[Configuration](#configuration)
 * Create Entity file in the directory. ex: `User.php`
 * Write details in the Entity file. This needs to include annotations. ex:
 
@@ -183,8 +191,6 @@ class User
     }
 }
 ```
-
-Entity directory can't change now. But in the near future, implement configuration feature.
 
 See also
 ========
