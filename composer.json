@@ -17,7 +17,11 @@
 	"autoload" : {
 		"psr-0" : {
 			"Fuel" : "src/"
-		}
+		},
+		"classmap" :
+		[
+			"lib", "php-sql-parser.php"
+		]
 	},
 	"require" : {
 		"php" : ">=5.3.3",
