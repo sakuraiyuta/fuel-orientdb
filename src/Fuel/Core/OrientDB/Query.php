@@ -7,15 +7,32 @@ use \Fuel\Core\OrientDB;
 
 class Query extends \Doctrine\OrientDB\Query\Query
 {
-	public function execute($db=NULL)
+	public function execute($db=NULL, $as_object=FALSE)
 	{
-		if ( ! $db )
+		if ( ! is_object($db) )
 		{
-			$db = OrientDB::get_manager();
+			$db = \Database_Connection::instance();
 		}
-		$return = $db->execute($this);
+
+		$type = strtoupper(
+			array_search(
+				get_class($this->command),
+				$this->commands
+			)
+		);
+		$return = $db->query($type, $this, $as_object);
 
 		return $return;
+	}
+
+    public function select(array $projections=array(), $append=true)
+	{
+		return parent::select($projections, $append);
+	}
+
+	public function from(array $target=array(), $append=TRUE)
+	{
+		return parent::from($target, $append);
 	}
 
 	public function set(array $pairs)

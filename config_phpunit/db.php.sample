@@ -1,0 +1,9 @@
+<?php
+return array(
+	'type'       => 'orientdb',
+	'connection'  => array(
+		'dsn'        => 'orientdb:host=localhost;dbname=test-fuel-orientdb;port=2480',
+		'username'   => 'admin',
+		'password'   => 'admin',
+	),
+);

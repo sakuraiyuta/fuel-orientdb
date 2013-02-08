@@ -17,7 +17,6 @@ class QueryTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->object = new Query;
 	}
 
 	/**
@@ -30,14 +29,52 @@ class QueryTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @covers Fuel\Core\OrientDB\Query::execute
-	 * @todo   Implement testExecute().
 	 */
 	public function testExecute()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		// select existing objects and count
+		$this->object = new Query();
+		$this->object
+			->select()
+			->from(array("TestClass"));
+		$result = $this->object->execute();
+		$this->assertEquals(is_array($result), TRUE);
+		$prev_count = count($result);
+
+		// insert new object and check
+		$this->object = new Query();
+		$datetime = date("Y-m-d H:i:s");
+		$this->object
+			->insert()
+			->into("TestClass")
+			->fields(array("testcolumn1", "testcolumn3"))
+			->values(array("testvalue1", $datetime));
+		$result = $this->object->execute();
+		$this->assertEquals(is_array($result), TRUE);
+		$this->assertEquals(count($result), 1);
+		$result_one = array_pop($result);
+		$this->assertEquals(get_class($result_one), "Doctrine\\OrientDB\\Proxy\\Entity\\TestClass");
+		$this->assertEquals($result_one->getTestcolumn1(), "testvalue1");
+		$this->assertEquals($result_one->getTestcolumn2(), NULL);
+		$this->assertEquals($result_one->getTestcolumn3()->format("Y-m-d H:i:s"), $datetime);
+
+		// select and check is inserted object equals selected object.
+		$this->object = new Query();
+		$this->object
+			->select()
+			->from(array("TestClass"))
+			->orderBy("testcolumn3", TRUE, FALSE);
+		$result = $this->object->execute();
+		$this->assertEquals(is_array($result), TRUE);
+		$this->assertEquals(count($result), $prev_count + 1);
+		$result_one_inserted = array_pop($result);
+		$this->assertEquals(get_class($result_one_inserted), "Doctrine\\OrientDB\\Proxy\\Entity\\TestClass");
+		$this->assertEquals($result_one_inserted, $result_one);
+
+//		$this->object = new Query();
+//		$this->object
+//			->delete("TestClass");
+//		$result = $this->object->execute();
 	}
 
 	/**

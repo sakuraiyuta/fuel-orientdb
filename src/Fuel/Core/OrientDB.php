@@ -12,7 +12,7 @@ class OrientDB extends \Fuel\Core\DB
 	public static function get_manager($db = NULL)
 	{
 		$connection = \Database_Connection::instance($db)->connection();
-		return $connection;
+		return $connection["manager"];
 	}
 
 	public static function query($sql, $type = NULL)

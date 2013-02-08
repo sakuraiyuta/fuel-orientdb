@@ -36,10 +36,7 @@ class OrientDBTest extends PHPUnit_Framework_TestCase
 	public function testGet_manager()
 	{
 		$result = OrientDB::get_manager();
-		$this->assertEquals(is_array($result), TRUE);
-		$this->assertEquals(get_class($result["manager"]), "Doctrine\ODM\OrientDB\Manager");
-		$this->assertEquals(get_class($result["binding"]), "Doctrine\OrientDB\Binding\HttpBinding");
-		$this->assertEquals(get_class($result["mapper"]), "Doctrine\ODM\OrientDB\Mapper");
+		$this->assertEquals(get_class($result), "Doctrine\ODM\OrientDB\Manager");
 	}
 
 	/**

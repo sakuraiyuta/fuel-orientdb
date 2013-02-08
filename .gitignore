@@ -1,2 +1,4 @@
 tmp/*
 !tmp/.gitkeep
+config_phpunit/db.php
+

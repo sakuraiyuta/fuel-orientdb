@@ -35,6 +35,11 @@ defined('FUEL_START_MEM') or define('FUEL_START_MEM', memory_get_usage());
 // Boot the app
 require_once APPPATH.'bootstrap.php';
 
+if ( file_exists(__DIR__ . '/config_phpunit/db.php') )
+{
+	\Config::load(__DIR__ . '/config_phpunit/db.php', "db.default", TRUE, TRUE);
+}
+
 // Set test mode
 Fuel::$is_test = true;
 

@@ -2,6 +2,7 @@
 
 namespace Fuel\Core;
 
+use \Exception;
 use Doctrine\OrientDB\Binding\BindingParameters;
 use Doctrine\OrientDB\Binding\HttpBinding;
 use Doctrine\OrientDB\Query\Query;
@@ -47,7 +48,9 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 		// regist namespace-path mapping to fuel as PSR-0 so Symfony\Finder can't find entities normally.
 		$proxy_dir = APPPATH . "vendor" . DS . "sakuraiyuta" . DS . "fuel-orientdb" . DS . "tmp" . DS;
-		$entity_dir = APPPATH . "classes" . DS . "Entity" . DS;
+		$entity_dir = (isset($this->_config["entity_dir"]))
+			? $this->_config["entity_dir"]
+			: APPPATH . "classes" . DS . "Entity" . DS;
 		\Autoloader::add_namespace("Doctrine", $proxy_dir . DS . "/Doctrine" . DS, TRUE);
 		\Autoloader::add_namespace("Entity", $entity_dir, TRUE);
 
@@ -93,6 +96,15 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 	public function query($type, $sql, $as_object)
 	{
+		if ( is_string($type) )
+		{
+			$type = constant("\DB::{$type}");
+		}
+		elseif ( ! is_int($type) )
+		{
+			throw new Exception("Unknown type {$type}.");
+		}
+
 		if ( ! $this->_connection )
 		{
 			$this->connect();
@@ -134,12 +146,18 @@ class Database_Orientdb_Connection extends \Fuel\Core\Database_Connection
 
 		if ($type === \DB::SELECT)
 		{
-			return $result->getResult();
+			if ( is_object($result) )
+			{
+				return $result->getResult();
+			}
+
+			return $result;
 		}
 		elseif ($type === \DB::INSERT)
 		{
+			return $result;
 			//TODO: implement when inserts record
-			throw new Exception("not implemented yet.");
+//			throw new Exception("not implemented yet.");
 //			// Return a list of insert id and rows created
 //			return array(
 //				$this->_connection->insert_id,
