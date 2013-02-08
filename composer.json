@@ -20,7 +20,7 @@
 		},
 		"classmap" :
 		[
-			"lib", "php-sql-parser.php"
+			"lib/PHP-SQL-Parser/php-sql-parser.php"
 		]
 	},
 	"require" : {
