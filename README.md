@@ -32,7 +32,7 @@ Installation
 * Install [composer](http://getcomposer.org).
 * In project dir, create `composer.json` file. *Strongly recommended:* set `vendor-dir` value to `fuel/app/vendor`. ex:
 
-```
+```json
 {
 	"config" : {
 		"vendor-dir" : "fuel/app/vendor"
@@ -47,7 +47,7 @@ Installation
 * Change permissions `"project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp` writable for HTTP Server. ex: `chmod 777 "project-dir"/fuel/app/vendor/sakuraiyuta/fuel-orientdb/tmp`
 * Modify your application bootstrap. Target file is `"project-dir"/fuel/app/bootstrap.php`. Add some classes to Autoloader in line `Autoloader::add_classes()`. ex:
 
-```
+```php
 Autoloader::add_classes(array(
 	// Add classes you want to override here
 	// Example: 'View' => APPPATH.'classes/view.php',
@@ -66,7 +66,7 @@ You can configure database connection settings using FuelPHP common config file,
 
 Target file is `"project-dir"/fuel/app/config/{development,staging,test,production}/db.php`. ex:
 
-```
+```php
 return array(
 	'default' => array(
 		'type'       => 'orientdb',
@@ -100,7 +100,7 @@ You can use SQL+ query provided by OrientDB, in FuelPHP controllers.
 
 *Notice: You can only use SELECT statement. Executing INSERT, UPDATE, and DELETE statement feature is not implemented yet.*
 
-```
+```php
 // ex: Using FuelPHP DB class.
 // In DB class, creates instance Database_Orientdb_Connection and execute query.
 // This returns array contains stdClass object. These objects contains properties.
@@ -111,7 +111,7 @@ var_dump($result);
 Use FuelPHP-like query builder
 ------------------------------
 
-```
+```php
 $result = OrientDB::insert("User")
 	->set(
 		array(
@@ -127,7 +127,7 @@ Use raw orientdb-odm Manager
 
 If you want to use a feature, mapping records to object, write as below:
 
-```
+```php
 // ex: Using raw OrientDB class.
 // The class extends FuelPHP DB class (but many methods are not implemented yet).
 // This returns array contains User object. These objects are mapped to records.
@@ -149,7 +149,7 @@ Instruction is below:
 * Create Entity file in the directory. ex: `User.php`
 * Write details in the Entity file. This needs to include annotations. ex:
 
-```
+```php
 // Need definition of namespace "Entity" for autoloading.
 namespace Entity;
 
@@ -217,7 +217,7 @@ This library uses PHPUnit for testing. If you want to modify, contribute to this
 * Check `phpunit.xml` and modify settings if you want.
 * Execute `phpunit test` in `fuel-orientdb` directory.
 
-You can use [generator](blob/master/bin/generate_test.sh) for generating test-class (Needs phpunit-skelgen. you can install with PEAR.)
+You can use [generator](bin/generate_test.sh) for generating test-class (Needs phpunit-skelgen. you can install with PEAR.)
 
 Directories and files related to testing are below:
 
