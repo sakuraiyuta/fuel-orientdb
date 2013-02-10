@@ -30,13 +30,14 @@ Installation
 * Install and execute [OrientDB](http://www.orientdb.org).
 * Create [FuelPHP](http://fuelphp.com/) project in new directory. (any installation method you can use. ex:use git-clone, download and extract tarball manually)
 * Install [composer](http://getcomposer.org).
-* In project dir, create `composer.json` file. *Strongly recommended:* set `vendor-dir` value to `fuel/app/vendor`. ex:
+* In project dir, create `composer.json` file. *Strongly recommended:* set `vendor-dir` value to `fuel/app/vendor`, and set `minimum-stability` to `dev`. (because it uses `doctrine/orientdb-odm` development ver) ex:
 
 ```json
 {
 	"config" : {
 		"vendor-dir" : "fuel/app/vendor"
 	},
+	"minimum-stability" : "dev",
 	"require" : {
 		"sakuraiyuta/fuel-orientdb" : "dev-master"
 	}
